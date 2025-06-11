@@ -43,10 +43,11 @@ def plot_probability_animation(probability):
         current_width = probability * (i / 10)
         bar[0].set_width(current_width)
         progress_text.text(f"Animasi: {int(current_width * 100)}%")
-        fig_placeholder.pyplot(fig)
+        # Menggunakan st.pyplot() langsung untuk memperbarui plot
+        st.pyplot(fig)
         time.sleep(0.1)
 
-    plt.close(fig) # Close the figure to prevent memory issues
+    plt.close(fig) # Tutup figure untuk mencegah isu memori
 
 # Streamlit UI
 st.set_page_config(page_title="Kalkulator Peluang", layout="centered")
@@ -88,20 +89,8 @@ if st.button("Hitung Peluang"):
         st.info(f"Dalam persentase: **{probability * 100:.2f}%**")
 
         st.subheader("Animasi Visualisasi Peluang")
-        fig_placeholder = st.empty() # Placeholder for the plot
+        # Tidak perlu st.empty() terpisah di sini untuk plot karena st.pyplot() langsung menampilkannya
         plot_probability_animation(probability)
 
 st.markdown("---")
 st.write("Dibuat dengan ❤️ oleh Program Python")
-
-!ngrok config add-authtoken 2uzt3zck7DsFcgSphPuyEpHgUiN_3gijm7UyXNThGByqVsBhA
-
-from pyngrok import ngrok
-
-# Jalankan streamlit sebagai background process
-!streamlit run bmi_app.py &>/dev/null &
-
-# Hubungkan ke Streamlit via ngrok (versi baru)
-public_url = ngrok.connect(addr="8533", proto="http")
-print("Aplikasi bisa diakses di link berikut:")
-print(public_url)
